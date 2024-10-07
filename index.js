@@ -30,7 +30,7 @@ window.addEventListener("load", function () {
         "rgb(198, 3, 252)",
         "rgb(107, 3, 252)",
         "rgb(3, 3, 252)",
-        'white'
+        "white",
       ];
 
       this.color =
@@ -122,6 +122,7 @@ window.addEventListener("load", function () {
       const zoomLabel = document.getElementById("zoomLabel");
       const curveSlider = document.getElementById("curve");
       const curveLabel = document.getElementById("curveLabel");
+      const debugBtn = document.getElementById("debugBtn");
 
       zoomSlider.addEventListener("change", (e) => {
         this.zoom = Number(e.target.value);
@@ -138,10 +139,14 @@ window.addEventListener("load", function () {
         if (e.key === "d") {
           this.debug = !this.debug;
         }
+      });
 
-        window.addEventListener("resize", (e) => {
-          //this.resize(e.target.innerWidth, e.target.innerHeight);
-        });
+      debugBtn.addEventListener("click", () => {
+        this.debug = !this.debug;
+      });
+
+      window.addEventListener("resize", (e) => {
+        //this.resize(e.target.innerWidth, e.target.innerHeight);
       });
     }
     drawText() {
@@ -224,19 +229,12 @@ window.addEventListener("load", function () {
         }
       }
 
-      // for (let y = 0; y < this.rows; y++) {
-      //   for (let x = 0; x < this.cols; x++) {
-      //     let angle =
-      //       (Math.cos(x * this.zoom) + Math.sin(y * this.zoom)) * this.curve;
-      //     this.flowField.push(angle);
-      //   }
-      // }
-
       // create particles
       this.particles = [];
       for (let i = 0; i < this.numOfParticles; i++) {
         this.particles.push(new Particle(this));
       }
+      this.particles.forEach((particle) => particle.reset());
     }
     drawGrid() {
       this.context.save();
