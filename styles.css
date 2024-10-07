@@ -17,7 +17,6 @@ body {
   z-index: 60;
   max-width: 100%;
   touch-action: none;
-
 }
 .canvas1 {
   background-color: black;
@@ -32,6 +31,7 @@ body {
 .controls {
   position: absolute;
   left: 50%;
+  margin-top: 5%;
   transform: translateX(-50%);
   color: white;
   display: flex;
@@ -63,10 +63,8 @@ input {
   cursor: pointer;
   transition: all 300ms ease-in-out;
 }
-.debugBtn:hover{
+.debugBtn:hover {
   background-color: darkgray;
- 
+
   color: black;
-
 }
-

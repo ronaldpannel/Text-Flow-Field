@@ -82,7 +82,7 @@ window.addEventListener("load", function () {
       let attempts = 0;
       let resetSuccess = false;
 
-      while (attempts < 10 && !resetSuccess) {
+      while (attempts < 30 && !resetSuccess) {
         attempts++;
         let testIndex = Math.floor(
           Math.random() * this.effect.flowField.length
