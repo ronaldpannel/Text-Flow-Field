@@ -82,7 +82,7 @@ window.addEventListener("load", function () {
       let attempts = 0;
       let resetSuccess = false;
 
-      while (attempts < 30 && !resetSuccess) {
+      while (attempts < 100 && !resetSuccess) {
         attempts++;
         let testIndex = Math.floor(
           Math.random() * this.effect.flowField.length
@@ -117,23 +117,11 @@ window.addEventListener("load", function () {
       this.cols;
       this.flowField = [];
       this.debug = false;
+      this.grad;
       this.init();
-      const zoomSlider = document.getElementById("zoom");
-      const zoomLabel = document.getElementById("zoomLabel");
-      const curveSlider = document.getElementById("curve");
-      const curveLabel = document.getElementById("curveLabel");
-      const debugBtn = document.getElementById("debugBtn");
 
-      zoomSlider.addEventListener("change", (e) => {
-        this.zoom = Number(e.target.value);
-        zoomLabel.innerText = `Zoom   ${this.zoom}`;
-        this.init();
-      });
-      curveSlider.addEventListener("change", (e) => {
-        this.curve = Number(e.target.value);
-        curveLabel.innerText = `Curve    ${this.curve}`;
-        this.init();
-      });
+      const debugBtn = document.getElementById("debugBtn");
+      const dropDown = document.getElementById("gradient");
 
       window.addEventListener("keydown", (e) => {
         if (e.key === "d") {
@@ -145,8 +133,13 @@ window.addEventListener("load", function () {
         this.debug = !this.debug;
       });
 
+      dropDown.addEventListener("change", (e) => {
+        this.grad = e.target.value;
+        this.init();
+      });
+
       window.addEventListener("resize", (e) => {
-        //this.resize(e.target.innerWidth, e.target.innerHeight);
+        this.resize(e.target.innerWidth, e.target.innerHeight);
       });
     }
     drawText() {
@@ -188,7 +181,27 @@ window.addEventListener("load", function () {
       grad3.addColorStop(0.6, "rgb(0, 0,255");
       grad3.addColorStop(0.8, "rgb(0, 255 ,150");
 
-      this.context.fillStyle = grad3;
+      const grad4 = this.context.createLinearGradient(
+        0,
+        0,
+        this.width,
+        this.height
+      );
+      grad4.addColorStop(0.2, "rgb(255,0,0");
+      grad4.addColorStop(0.4, "rgb(0,255, 0");
+      grad4.addColorStop(0.6, "rgb(0,0,255");
+      grad4.addColorStop(0.8, "rgb(255, 255 ,255");
+
+      if (this.grad === "grad1") {
+        this.context.fillStyle = grad1;
+      } else if (this.grad === "grad2") {
+        this.context.fillStyle = grad2;
+      } else if (this.grad === grad3) {
+        this.context.fillStyle = grad3;
+      } else {
+        this.context.fillStyle = grad4;
+      }
+      this.context.fillStyle = this.grad;
       this.context.fillText(
         "JS",
         this.width * 0.5,
@@ -280,6 +293,4 @@ window.addEventListener("load", function () {
     requestAnimationFrame(animate);
   }
   animate();
-
-  //load function end
 });
